@@ -2,7 +2,7 @@
 """ Console Module """
 import cmd
 import sys
-import shlex
+from shlex import split as my_split
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -114,12 +114,12 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
+    def do_create(self, arg):
         """Creats object given parameters: Our Code
         Syntax: create <Class name> <param 1> <param 2> <param 3>...
         Param syntax: <key name>=<value>
         """
-        args = args.split()
+        args = my_split(arg)  # ex. split but ignore double quotes
         if args is None or len(args) == 0:
             print("** class name missing **")
             return
@@ -137,10 +137,8 @@ class HBNBCommand(cmd.Cmd):
                     if '"' in value:
                         value = value[1:-1]
                         value = value.replace('_', ' ')
-                    elif value.isdigit() is True:
-                        value = eval(value)
-                    elif '.' in value:
-                        value = float(value)
+                    if key in HBNBCommand.types:
+                        value = HBNBCommand.types[key](value)  # typecasting
                     keyValue_dict[key] = value
                 # print (keyValue_dict)
                 new_instance.__dict__.update(keyValue_dict)
