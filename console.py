@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import shlex
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -114,17 +115,34 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
-        if not args:
+        """OUR CODE TASK 1"""
+        args = args.split()
+        if args is None or len(args) == 0:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
+        else:
+            new_instance = HBNBCommand.classes[args[0]]()
+            for i in args[1:]:
+                keyValue = i.split('=')
+                # print(keyValue)
+                item = iter(keyValue)
+                keyValue_dict = dict(zip(item, item))
+                for key, value in keyValue_dict.items():
+                    if '"' in value:
+                        value = value[1:-1]
+                        value = value.replace('_', ' ')
+                    elif value.isdigit() is True:
+                        value = eval(value)
+                    elif '.' in value:
+                        value = float(value)
+                    keyValue_dict[key] = value
+                # print (keyValue_dict)
+                new_instance.__dict__.update(keyValue_dict)
         print(new_instance.id)
-        storage.save()
+        new_instance.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -199,21 +217,17 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
-        print_list = []
 
-        if args:
-            args = args.split(' ')[0]  # remove possible trailing args
-            if args not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+        parsed_line = args.split(" ")
+        if not parsed_line:
+            for value in storage.all().values():
+                print(value)
+        elif parsed_line[0] in HBNBCommand.classes:
+            for key, value in storage.all().items():
+                if parsed_line[0] in key:
+                    print(value)
         else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
-
-        print(print_list)
+            print("** class doesn't exist **")
 
     def help_all(self):
         """ Help information for the all command """
