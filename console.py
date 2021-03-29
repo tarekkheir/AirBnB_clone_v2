@@ -136,8 +136,9 @@ class HBNBCommand(cmd.Cmd):
                 for key, value in keyValue_dict.items():
                     if '"' in value:
                         value = value[1:-1]
+                    if '_' in value:
                         value = value.replace('_', ' ')
-                    if key in HBNBCommand.types:
+                    elif key in HBNBCommand.types:
                         value = HBNBCommand.types[key](value)  # typecasting
                     keyValue_dict[key] = value
                 # print (keyValue_dict)
