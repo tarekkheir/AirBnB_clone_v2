@@ -115,7 +115,10 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """OUR CODE TASK 1"""
+        """Creats object given parameters: Our Code
+        Syntax: create <Class name> <param 1> <param 2> <param 3>...
+        Param syntax: <key name>=<value>
+        """
         args = args.split()
         if args is None or len(args) == 0:
             print("** class name missing **")
@@ -216,7 +219,7 @@ class HBNBCommand(cmd.Cmd):
         print("[Usage]: destroy <className> <objectId>\n")
 
     def do_all(self, args):
-        """ Shows all objects, or all objects of a class"""
+        """ Shows all objects, or all objects of a class: Our code"""
 
         parsed_line = args.split(" ")
         if not parsed_line:
