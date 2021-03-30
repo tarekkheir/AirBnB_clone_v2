@@ -21,9 +21,10 @@ class BaseModel():
         created_at (sqlalchemy DateTime): The datetime at creation.
         updated_at (sqlalchemy DateTime): The datetime of last update.
     """
-    id = Column(String(60), unique=True, primary_key=True, nullable=False)
-    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
-    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        id = Column(String(60), unique=True, primary_key=True, nullable=False)
+        created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+        updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
@@ -51,8 +52,8 @@ class BaseModel():
     def save(self):
         """Updates updated_at with current time when instance is changed"""
         self.updated_at = datetime.now()
-        storage.new(self)
-        storage.save()
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         """Convert instance into dict format"""
