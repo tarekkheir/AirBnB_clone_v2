@@ -33,9 +33,9 @@ class BaseModel():
                 else:
                     if key != '__class__':
                         self.__dict__[key] = value
-        else:
-            self.id = str(uuid.uuid4())
-            self.created_at = self.updated_at = datetime.now()
+
+        self.id = str(uuid.uuid4())
+        self.created_at = self.updated_at = datetime.now()
           # storage.new(self) : moved to def save(self)
 
 
