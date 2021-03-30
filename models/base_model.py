@@ -13,7 +13,7 @@ if os.getenv('HBNB_TYPE_STORAGE') == 'db':
 else:
     Base = object
 
-class BaseModel:
+class BaseModel():
     """A base class for all hbnb models
 
     Attributes for SQLAlchemy:
@@ -21,9 +21,9 @@ class BaseModel:
         created_at (sqlalchemy DateTime): The datetime at creation.
         updated_at (sqlalchemy DateTime): The datetime of last update.
     """
-    id = Column(String=(60), unique=True, primary_key=True, nullable=False)
-    created_at = Column(Datetime, nullable=False, default=datetime.utcnow())
-    updated_at = Column(Datetime, nullable=False, default=datetime.utcnow())
+    id = Column(String(60), unique=True, primary_key=True, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""

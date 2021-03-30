@@ -25,7 +25,7 @@ class DBStorage:
     __engine = None
     __session = None
 
-    def __init(self):
+    def __init__(self):
         """Initializing DBStorage instances"""
         # Create the engine
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".
