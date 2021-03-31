@@ -68,7 +68,7 @@ class Place(BaseModel, Base):
             It will be FileStorage relashionship btwn Place and Review
             """
             new = []
-            for element in models.storage.all(Rewiew):
+            for element in models.storage.all(Review):
                 if element.place_id == self.id:
                     new.append(element)
             return new
