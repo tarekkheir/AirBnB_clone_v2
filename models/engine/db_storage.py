@@ -25,7 +25,7 @@ class DBStorage:
     __engine = None
     __session = None
 
-    def __init(self):
+    def __init__(self):
         """Initializing DBStorage instances"""
         # Create the engine
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".
@@ -39,19 +39,23 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Query on the current database session (self.__session) all objects
-        for the class name (argument cls)
-        Return: a dictionary {key = <class-name>.<object-id> : value = object"""
-        if cls is None:
-            objs = self.__session.query(User).all()
-            objs.extend(self.__session.query(State).all())
-            objs.extend(self.__session.query(City).all())
-            objs.extend(self.__session.query(Amenity).all())
-            objs.extend(self.__session.query(Place).all())
-            objs.extend(self.__session.query(Review).all())
+        """Returns dictionary with all objects depending
+        of the class name (argument cls)"""
+        if cls:
+            objs = self.__session.query(self.classes()[cls])
         else:
-            objs = self.session.query(self.classes()[cls])
-        return {"{}.{}".format(type(obj).__name__.obj.id): obj for obj in objs}
+            objs = self.__session.query(State).all()
+            objs += self.__session.query(City).all()
+            objs += self.__session.query(User).all()
+            objs += self.__session.query(Place).all()
+            objs += self.__session.query(Amenity).all()
+            objs += self.__session.query(Review).all()
+
+        dic = {}
+        for obj in objs:
+            k = '{}.{}'.format(type(obj).__name__, obj.id)
+            dic[k] = obj
+        return dic
 
     def new(self, obj):
         """Add the object to the current db session (self.__session)"""
@@ -75,9 +79,3 @@ class DBStorage:
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session)
         self.__session = Session
-
-    def close(self):
-        """Closes the sessions"""
-        self.__session.remove()
-
-    
