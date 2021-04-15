@@ -11,7 +11,7 @@ sudo mkdir -p /data/web_static/releases/test/
 sudo touch /data/web_static/releases/test/index.html
 sudo chmod 666 /data/web_static/releases/test/index.html
 
-content = "
+content="
 <html>
   <head>
   </head>
