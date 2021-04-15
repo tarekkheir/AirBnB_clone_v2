@@ -20,7 +20,7 @@ content = "
   </body>
 </html>"
 
-echo $content >> /data/web_static/releases/test/index.html
+echo "$content" >> /data/web_static/releases/test/index.html
 
 sudo ln -sf /data/web_static/current /data/web_static/releases/test/
 sudo chown -R ubuntu:ubuntu /data/
