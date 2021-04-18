@@ -8,6 +8,7 @@ from fabric.api import local, sudo
 
 
 def do_pack():
+    """ make a .tgz files pack"""
     sudo("mkdir -p versions")
     now = datetime.now()
     archive_path = "web_static_{}{}{}{}{}{}.tgz".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
