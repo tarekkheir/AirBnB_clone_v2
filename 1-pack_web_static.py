@@ -14,7 +14,7 @@ def do_pack():
     archive_path = "web_static_{}{}{}{}{}{}.tgz".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
     
     try:
-        local("tar -czvf {} web_static".format(archive_path))
+        local("tar -czvf /versions/{} web_static".format(archive_path))
         return archive_path
     
     except:
