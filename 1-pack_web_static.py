@@ -11,11 +11,12 @@ def do_pack():
     """ make a .tgz files pack"""
     sudo("mkdir -p versions")
     now = datetime.now()
-    archive_path = "web_static_{}{}{}{}{}{}.tgz".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
-    
-    try:
-        local("tar -czvf /versions/{} web_static".format(archive_path))
+    archive_path = "web_static_{}{}{}{}{}{}.tgz".format(now.year, now.month,
+                                                        now.day, now.hour,
+                                                        now.minute, now.second)
+
+    if local("tar -czvf versions/{} web_static"
+             .format(archive_path)).succeeded:
         return archive_path
-    
-    except:
+    else:
         return None
