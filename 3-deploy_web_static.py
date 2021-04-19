@@ -13,12 +13,18 @@ def do_pack():
     """ make a .tgz files pack"""
     local("mkdir -p versions")
     now = datetime.now()
-    archive_path = "versions/web_static_{}.tgz".format(now.strftime("%Y%m%d%H%M%S"))
+    archive_path = "versions/web_static_{}{}{}{}{}{}.tgz".format(now.year
+                                                                 now.month
+                                                                 now.day
+                                                                 now.hour
+                                                                 now.minute
+                                                                 now.second)
 
     if local("tar -czvf {} web_static".format(archive_path)).succeeded:
         return archive_path
     else:
         return None
+
 
 def do_deploy(archive_path):
     """ do_deploy function"""
@@ -45,6 +51,7 @@ def do_deploy(archive_path):
         return True
     except:
         return False
+
 
 def deploy():
     """ deploy all function"""
