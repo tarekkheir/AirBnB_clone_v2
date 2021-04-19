@@ -15,7 +15,7 @@ def do_deploy(archive_path):
 
     try:
         put(archive_path, "/tmp/")
-        local("mkdir -p /data/web_static/releases/")
+        sudo("mkdir -p /data/web_static/releases/")
         name_split = archive_path.split('/')
         name_split = name[1].split('.')
         name_split = name[0]
@@ -23,7 +23,7 @@ def do_deploy(archive_path):
         filename = filename[1]
 
         data = "/data/web_static/releases/"
-        local("tar -zxvf /tmp/{} -C {}{}".format(filename, data, name_split))
+        sudo("tar -zxvf /tmp/{} -C {}{}".format(filename, data, name_split))
         sudo("rm -Rf /tmp/".format(filename))
         sudo("mv {}{}/web_static/* {}releases/{}"
              .format(data, name_split, data, name_split))
