@@ -13,12 +13,8 @@ def do_pack():
     """ make a .tgz files pack"""
     local("mkdir -p versions")
     now = datetime.now()
-    archive_path = "versions/web_static_{}{}{}{}{}{}.tgz".format(now.year
-                                                                 now.month
-                                                                 now.day
-                                                                 now.hour
-                                                                 now.minute
-                                                                 now.second)
+    archive_path = "versions/web_static_{}.tgz"\
+                   .format(now.strftime("%Y%m%d%H%M%S"))
 
     if local("tar -czvf {} web_static".format(archive_path)).succeeded:
         return archive_path
