@@ -17,8 +17,8 @@ def do_deploy(archive_path):
         put(archive_path, "/tmp/")
         sudo("mkdir -p /data/web_static/releases/")
         name_split = archive_path.split('/')
-        name_split = name[1].split('.')
-        name_split = name[0]
+        name_split = name_split[1].split('.')
+        name_split = name_split[0]
         filename = archive_path.split('/')
         filename = filename[1]
 
