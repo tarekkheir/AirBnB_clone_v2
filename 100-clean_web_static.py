@@ -16,8 +16,8 @@ def do_clean(number=0):
     else:
         number = int(number)
 
-    local("ls -1tr /versions/* | tail -n {} | xargs -d '\n' rm -Rf --"
+    local("ls -d -1tr /versions/* | tail -n {} | xargs -d '\n' rm -Rf --"
           .format(number))
-    local("ls -1tr  /data/web_static/releases/* | tail -n {}\
+    local("ls -d -1tr  /data/web_static/releases/* | tail -n {}\
           | xargs -d '\n' rm -Rf --"
           .format(number))
