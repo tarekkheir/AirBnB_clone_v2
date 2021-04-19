@@ -24,10 +24,10 @@ def do_deploy(archive_path):
 
         data = "/data/web_static/releases/"
         sudo("tar -zxvf /tmp/{} -C {}{}".format(filename, data, name_split))
-        sudo("rm -Rf /tmp/".format(filename))
+        sudo("rm -Rf /tmp/{}".format(filename))
         sudo("mv {}{}/web_static/* {}releases/{}"
              .format(data, name_split, data, name_split))
-        sudo("rm -rf {}}{}/web_static".format(data, name_split))
+        sudo("rm -rf {}{}/web_static".format(data, name_split))
         sudo("rm -Rf /data/web_static/current")
         sudo("ln -s {}{} /data/web_static/current".format(data, name_split))
         return True
