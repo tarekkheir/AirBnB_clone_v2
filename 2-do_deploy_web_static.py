@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+""" Fabric script that distributes an archive
+to your web servers, using the function do_deploy"""
+
+
+import os
+from fabric.api import *
+env.hosts = ['35.243.232.238', '35.237.104.223']
+
+
+def do_deploy(archive_path):
+    """ do_deploy function"""
+    if os.path.isfile(archive_path) is None:
+        return False
+    
+    try:
+        put(archive_path, "/tmp/")
+        local("mkdir -p /data/web_static/releases/")
+        name_split = archive_path.split('/')
+        name_split = name[1].split('.')
+        name_split = name[0]
+        filename = archive_path.split('/')
+        filename = filename[1]
+
+        local("tar -zxvf /tmp/{} -C /data/web_static/releases/{}".format(filename, name_split))
+        sudo("rm -Rf /tmp/".format(filename))
+        sudo("rm -Rf /data/web_static/current")
+        sudo("ln -s /data/web_static/releases/{} /data/web_static/current".format(name_split))
+        return True
+    except:
+        return False
