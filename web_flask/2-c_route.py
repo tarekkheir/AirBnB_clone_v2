@@ -18,7 +18,7 @@ def HBNB_task1():
 
 @app.route('/c/<text>', strict_slashes=False)
 def c_text(text):
-    return "C %s" % escape(text.replace("_", " "))
+    return "C {}".format(text.replace("_", " "))
 
 
 if __name__ == '__main__':
